@@ -269,7 +269,7 @@ impl ToTokensDiagnostics for SchemaType<'_> {
             "f32" | "f64" => schema_type_tokens(tokens, SchemaTypeInner::Number, self.nullable),
 
             #[cfg(feature = "chrono")]
-            "DateTime" | "NaiveDateTime" | "NaiveDate" | "NaiveTime" => {
+            "DateTime" | "NaiveDateTime" | "NaiveDate" | "NaiveTime" | "FixedOffset" => {
                 schema_type_tokens(tokens, SchemaTypeInner::String, self.nullable)
             }
 
@@ -404,7 +404,7 @@ impl KnownFormat {
             "NaiveDate" => Self::Date,
 
             #[cfg(feature = "chrono")]
-            "DateTime" | "NaiveDateTime" => Self::DateTime,
+            "DateTime" | "NaiveDateTime" | "FixedOffset" => Self::DateTime,
 
             #[cfg(any(feature = "chrono", feature = "time", feature = "jiff_0_2"))]
             "Date" => Self::Date,
@@ -700,7 +700,7 @@ impl PrimitiveType {
             "f32" | "f64" => syn::parse_quote!(#path),
 
             #[cfg(feature = "chrono")]
-            "DateTime" | "NaiveDateTime" | "NaiveDate" | "NaiveTime" => {
+            "DateTime" | "NaiveDateTime" | "NaiveDate" | "NaiveTime" | "FixedOffset" => {
                 syn::parse_quote!(String)
             }
 
