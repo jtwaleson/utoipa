@@ -215,7 +215,7 @@ fn is_primitive(name: &str) -> bool {
 fn is_primitive_chrono(name: &str) -> bool {
     matches!(
         name,
-        "DateTime" | "Date" | "NaiveDate" | "NaiveTime" | "Duration" | "NaiveDateTime"
+        "DateTime" | "Date" | "NaiveDate" | "NaiveTime" | "Duration" | "NaiveDateTime" | "FixedOffset"
     )
 }
 
