@@ -99,7 +99,13 @@ impl SchemaType<'_> {
 
             #[cfg(feature = "chrono")]
             if !primitive {
-                primitive = is_primitive_chrono(name);
+                // Check if the full path contains DateTime<FixedOffset>
+                let full_path = path.to_token_stream().to_string();
+                if full_path.contains("DateTime<FixedOffset>") {
+                    primitive = true;
+                } else {
+                    primitive = is_primitive_chrono(name);
+                }
             }
 
             #[cfg(any(feature = "decimal", feature = "decimal_float"))]
@@ -215,7 +221,7 @@ fn is_primitive(name: &str) -> bool {
 fn is_primitive_chrono(name: &str) -> bool {
     matches!(
         name,
-        "DateTime" | "Date" | "NaiveDate" | "NaiveTime" | "Duration" | "NaiveDateTime" | "FixedOffset"
+        "DateTime" | "Date" | "NaiveDate" | "NaiveTime" | "Duration" | "NaiveDateTime" | "FixedOffset" | "DateTimeWithTimeZone"
     )
 }
 

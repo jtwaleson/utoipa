@@ -1615,12 +1615,15 @@ fn derive_component_with_chrono_feature() {
     #![allow(deprecated)] // allow deprecated Date in tests as long as it is available from chrono
     use chrono::{Date, DateTime, Duration, NaiveDate, NaiveDateTime, NaiveTime, Utc, FixedOffset};
 
+    type DateTimeWithTimeZone = DateTime<FixedOffset>;
+
     let post = api_doc! {
         struct Post {
             id: i32,
             value: String,
             datetime: DateTime<Utc>,
             datetime_fixed_offset: DateTime<FixedOffset>,
+            alias_datetime: DateTimeWithTimeZone,
             naive_datetime: NaiveDateTime,
             date: Date<Utc>,
             naive_date: NaiveDate,
